@@ -20,6 +20,15 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  /* http://localhost:3000/user/{id}/comprar/{id} */
+  @Post(':userId/comprar/:prodId')
+  comprarProduto(
+    @Param('userId') userId: number,
+    @Param('prodId') prodId: number,
+  ) {
+    return this.userService.comprarProduto(userId, prodId);
+  }
+
   /* http://localhost:3000/user */
   @Get()
   findAll() {

@@ -1,12 +1,9 @@
 export class CreateProdDto {
+    name:string;
     type:string;
     price:number;
-    /*size:
+    /*size:Tamanho (varia a forma para cada tipo de produto)*/
     amount:number;
-    /*-Preço
--Tamanho (varia a forma para cada tipo de produto, atente-se)
--Quantidade
--Demais atributos de sua escolha
- */
+    /*-Demais atributos de sua escolha */
 }
 

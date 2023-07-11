@@ -7,9 +7,10 @@ import { UpdateProdDto } from './dto/update-prod.dto';
 export class ProdController {
   constructor(private readonly prodService: ProdService) {}
 
-  @Post()
-  create(@Body() createProdDto: CreateProdDto) {
-    return this.prodService.create(createProdDto);
+
+  @Post('admin')
+  createProdByAdmin(@Body() createProdDto: CreateProdDto) {
+    return this.prodService.createProdByAdmin(createProdDto);
   }
 
   @Get()
@@ -22,13 +23,14 @@ export class ProdController {
     return this.prodService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProdDto: UpdateProdDto) {
-    return this.prodService.update(+id, updateProdDto);
+  @Patch('admin/:id')
+  updateProdByAdmin(@Param('id') id: string, @Body() updateProdDto: UpdateProdDto) {
+    return this.prodService.updateProdByAdmin(+id, updateProdDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.prodService.remove(+id);
+  @Delete('admin/:id')
+  removeProdByAdmin(@Param('id') id: string) {
+    return this.prodService.removeProdByAdmin(+id);
   }
+
 }

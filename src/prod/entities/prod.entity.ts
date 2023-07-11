@@ -7,6 +7,9 @@ export class Prod{
     id:number
 
     @Column()
+    name:string
+
+    @Column()
     type:string
 
     @Column()

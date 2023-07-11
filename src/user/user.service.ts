@@ -20,18 +20,28 @@ export class UserService {
     this.userRepository.save(newUser);
   }
 
-  async createProd(id:number, CreateProdDto: CreateProdDto){
-    const user = await this.userRepository.findOneBy({id})
-    if (!user)
-      throw new HttpException(
-        'User not found',
-        HttpStatus.BAD_REQUEST,
-      )
-    const newProd = this.prodRepository.create({
-      ...CreateProdDto,
-      user
-    })
-    return this.prodRepository.save(newProd)
+  //Comprar um produto por um cliente
+  async comprarProduto(userId: number, prodId: number): Promise<void> {
+    const user = await this.userRepository.findOne({ where: { id: userId }});
+    const prod = await this.prodRepository.findOne({ where: { id: prodId }});
+
+    if (!user || !prod) {
+      throw new HttpException('User or product not found', HttpStatus.BAD_REQUEST);
+    }
+
+    if (!user.isAdmin) {
+      throw new HttpException('User is not an admin', HttpStatus.FORBIDDEN);
+    }
+
+    if (prod.quantity === 0) {
+      throw new HttpException('Product is out of stock', HttpStatus.BAD_REQUEST);
+    }
+
+    user.produtos.push(prod);
+    prod.quantity--;
+
+    await this.userRepository.save(user);
+    await this.prodRepository.save(prod);
   }
 
   findAll() {
