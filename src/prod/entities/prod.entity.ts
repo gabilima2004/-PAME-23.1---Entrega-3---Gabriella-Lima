@@ -3,6 +3,7 @@ import {Column, Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm'
 
 @Entity({name: 'prod'})
 export class Prod{
+    
     @PrimaryGeneratedColumn()
     id:number
 
@@ -15,9 +16,8 @@ export class Prod{
     @Column()
     price:number
 
-    /*FAZER O SIZE*/
     @Column()
-    size 
+    size: string
 
     @Column()
     quantity:number
@@ -25,6 +25,5 @@ export class Prod{
     @ManyToOne(() => User, user => user.prod)
     user: User
 
-    /*VER SE TEM MAIS ALGUM LEGAL PRA FAZER */
 }
 

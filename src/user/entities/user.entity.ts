@@ -16,7 +16,7 @@ export class User {
     @Column()
     password:string
 
-    /*Se for funcionário é true, se for cliente é false*/
+    //Determinar o tipo: se for administrador é true, se for cliente é false
     @Column()
     isAdmin:boolean
 
@@ -28,9 +28,9 @@ export class User {
     @OneToMany(() => Prod, prod => prod.user)
     prod: Prod[]
 
+    //Armazenar as associações entre os registros de usuários e produtos
     @ManyToMany(() => Prod)
     @JoinTable()
     produtos: Prod[];
 
-    /*VER SE TEM MAIS ALGUM LEGAL PRA FAZER */
 }

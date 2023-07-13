@@ -13,65 +13,14 @@ export class ProdService {
   constructor(@InjectRepository(Prod) private prodRepository: Repository<Prod>,
               @InjectRepository(User) private userRepository:Repository<User>) {}
 
-    async createProdByAdmin(id:number, createProdDto: CreateProdDto): Promise<Prod> {
-      const user = await this.userRepository.findOneBy({id})
-      
-      if (!user.isAdmin) {
-        throw new HttpException('User is not an admin', HttpStatus.FORBIDDEN);
-      }
-
-      if (!user)
-        throw new HttpException(
-          'User not found',
-          HttpStatus.BAD_REQUEST,
-        )
-      const newProd = this.prodRepository.create({
-        ...CreateProdDto,
-        user
-      })
-      return this.prodRepository.save(newProd)
-    }
-
-    async updateProdByAdmin(id:number, prodId: number, updateProdDto: UpdateProdDto): Promise<Prod> {
-      const user = await this.userRepository.findOneBy({id})
-      const prod = await this.prodRepository.findOne({ where: { id: prodId }});
-
-      if (!user.isAdmin) {
-        throw new HttpException('User is not an admin', HttpStatus.FORBIDDEN);
-      }
-
-      if (!prod) {
-        throw new NotFoundException('Product not found');
-      }
-
-      prod.name = updateProdDto.name;
-      prod.price = updateProdDto.price;
-
-
-      return this.prodRepository.save(prod);
-    }
-
-    async deleteProdByAdmin(id:number, prodId: number): Promise<void> {
-      const user = await this.userRepository.findOneBy({id})
-      const prod = await this.prodRepository.findOne({ where: { id: prodId }});
-
-      if (!user.isAdmin) {
-        throw new HttpException('User is not an admin', HttpStatus.FORBIDDEN);
-      }
-
-      if (!prod) {
-        throw new NotFoundException('Product not found');
-      }
-
-      await this.prodRepository.remove(prod);
-    }
-
+  //Mostrar todos os produtos
   findAll() {
-    return `This action returns all prod`;
+    return this.prodRepository.find;
   }
 
+  //Mostrar um produto por id
   findOne(id: number) {
-    return `This action returns a #${id} prod`;
+    return this.prodRepository.findOneBy({id});
   }
 
 }

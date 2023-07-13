@@ -7,30 +7,16 @@ import { UpdateProdDto } from './dto/update-prod.dto';
 export class ProdController {
   constructor(private readonly prodService: ProdService) {}
 
-
-  @Post('admin')
-  createProdByAdmin(@Body() createProdDto: CreateProdDto) {
-    return this.prodService.createProdByAdmin(createProdDto);
-  }
-
+  /* http://localhost:3000/prod */
   @Get()
   findAll() {
     return this.prodService.findAll();
   }
 
+  /* http://localhost:3000/prod */
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.prodService.findOne(+id);
-  }
-
-  @Patch('admin/:id')
-  updateProdByAdmin(@Param('id') id: string, @Body() updateProdDto: UpdateProdDto) {
-    return this.prodService.updateProdByAdmin(+id, updateProdDto);
-  }
-
-  @Delete('admin/:id')
-  removeProdByAdmin(@Param('id') id: string) {
-    return this.prodService.removeProdByAdmin(+id);
   }
 
 }
